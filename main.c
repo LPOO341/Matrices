@@ -7,7 +7,7 @@ void inicializarMatriz(int m[][SIZE]);
 void imprimirMatriz(int m[][SIZE], int f, int c);
 void sumarMatrices(int mA[][SIZE], int mB[][SIZE], int mRes[][SIZE], int f, int c);
 void transpuestaMatriz(int mA[][SIZE], int mRes[][SIZE], int f, int c);
-
+void multiplicarMatrices(int mA[][SIZE], int mB[][SIZE], int mRes[][SIZE], int f, int c);
 int main()
 {
   int matA[SIZE][SIZE];
@@ -15,11 +15,11 @@ int main()
   int matRes[SIZE][SIZE];
   int opc = 0;
   int filasA = 0, columnasA = 0, filasB = 0, columnasB = 0;
-  inicializarMatriz(matA);
-  inicializarMatriz(matB);
-  inicializarMatriz(matRes);
   do
   {
+    inicializarMatriz(matA);
+    inicializarMatriz(matB);
+    inicializarMatriz(matRes);
     printf("________________Menú________________\n");
     printf("1. Suma de dos matrices\n");
     printf("2. Multiplicacion de dos matrices\n");
@@ -27,8 +27,9 @@ int main()
     printf("4. Salir\n");
     printf("Opcion: ");
     scanf("%d", &opc);
-    if (opc == 1)
+    switch (opc)
     {
+    case 1:
       printf("Filas matrices (Maximo matrices 10x10): ");
       scanf("%d", &filasA);
       printf("\nColumnas matrices (Maximo matrices 10x10): ");
@@ -40,13 +41,34 @@ int main()
       llenarMatriz(matB, filasA, columnasA);
       sumarMatrices(matA, matB, matRes, filasA, columnasA);
       imprimirMatriz(matRes, filasA, columnasA);
-    }
-    else if (opc == 2)
-    {
-      printf("Multiplicacion\n");
-    }
-    else if (opc == 3)
-    {
+      break;
+    case 2:
+      printf("Filas matriz A (Maximo matrices 10x10): ");
+      scanf("%d", &filasA);
+      printf("\nColumnas matriz B (Maximo matrices 10x10): ");
+      scanf("%d", &columnasA);
+      printf("Filas matriz B (Maximo matrices 10x10): ");
+      scanf("%d", &filasB);
+      printf("\nColumnas matriz B (Maximo matrices 10x10): ");
+      scanf("%d", &columnasB);
+      if (columnasA == filasB)
+      {
+        printf("\n");
+        printf("Matriz A: \n");
+        llenarMatriz(matA, filasA, columnasA);
+        printf("Matriz B: \n");
+        llenarMatriz(matB, filasB, columnasB);
+        multiplicarMatrices(matA, matB, matRes, filasB, filasB);
+        imprimirMatriz(matRes, filasB, columnasB);
+      }
+      else
+      {
+        printf("El numero de columnas de la primer matriz debe coincidir con el numero de filas de la segunda \n");
+      }
+      
+      
+      break;
+    case 3:
       printf("Filas matrices (Maximo matrices 10x10): ");
       scanf("%d", &filasA);
       printf("\nColumnas matrices (Maximo matrices 10x10): ");
@@ -55,6 +77,10 @@ int main()
       llenarMatriz(matA, filasA, columnasA);
       transpuestaMatriz(matA, matRes, filasA, columnasA);
       imprimirMatriz(matRes, filasA, columnasA);
+      break;
+    default:
+      printf("Opcion no valida");
+      break;
     }
   } while (opc != 4);
   return 0;
@@ -121,13 +147,13 @@ void transpuestaMatriz(int mA[][SIZE], int mRes[][SIZE], int f, int c)
 
 void multiplicarMatrices(int mA[][SIZE], int mB[][SIZE], int mRes[][SIZE], int f, int c)
 {
-  for (size_t i = 0; i < count; i++)
+  for (size_t i = 0; i < c ; i++)
   {
-    for (size_t j = 0; j < count; j++)
+    for (size_t j = 0; j < f; j++)
     {
-      for (size_t k = 0; k < count; k++)
+      for (size_t k = 0; k < c; k++)
       {
-        /* code */
+        mRes[i][j] += mA[i][k] * mB[k][j];
       }
     }
   }
