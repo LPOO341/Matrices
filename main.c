@@ -78,8 +78,11 @@ int main()
       transpuestaMatriz(matA, matRes, filasA, columnasA);
       imprimirMatriz(matRes, filasA, columnasA);
       break;
+    case 4:
+      printf("Saliendo...");
+      break;
     default:
-      printf("Opcion no valida");
+      printf("Opcion no valida \n");
       break;
     }
   } while (opc != 4);
